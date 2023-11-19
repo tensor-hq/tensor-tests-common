@@ -18,6 +18,7 @@ import {
   createCreateMasterEditionV3Instruction,
   createCreateMetadataAccountV3Instruction,
   createSetCollectionSizeInstruction,
+  TokenStandard,
 } from '@metaplex-foundation/mpl-token-metadata';
 import {
   ConcurrentMerkleTreeAccount,
@@ -38,7 +39,7 @@ import {
   prependComputeIxs,
   TMETA_PROG_ID,
 } from '@tensor-hq/tensor-common';
-import { makeMintTwoAta } from './ata';
+import { createNft, makeMintTwoAta } from './ata';
 import { buildAndSendTx, makeNTraders } from './txs';
 
 export const DEFAULT_DEPTH_SIZE: ValidDepthSizePair = {
@@ -494,7 +495,7 @@ export const verifyCNftCreator = async ({
   return { metadata, leaf, assetId };
 };
 
-export const makeNfts = async ({
+export const makeTestNfts = async ({
   conn,
   payer,
   cnftMints = 0,
@@ -558,6 +559,18 @@ export const makeNfts = async ({
           share: 100 / nrCreators,
         }));
 
+  // --------------------------------------- create collection
+
+  await createNft({
+    conn,
+    payer,
+    owner: treeOwner,
+    mint: collection,
+    tokenStandard: TokenStandard.NonFungible,
+    royaltyBps: sellerFeeBasisPoints,
+    setCollSize: 50,
+  });
+
   // --------------------------------------- pnfts
 
   const traderAPnfts: Awaited<ReturnType<typeof makeMintTwoAta>>[] = [];
@@ -574,6 +587,7 @@ export const makeNfts = async ({
         creators,
         collection,
         collectionVerified: false,
+        createCollection: false,
         programmable: true, // pnfts cannot verify currently
         ruleSetAddr,
       }),
@@ -591,13 +605,14 @@ export const makeNfts = async ({
         creators,
         collection,
         collectionVerified: false, // pnfts cannot verify currently
+        createCollection: false,
         programmable: true,
         ruleSetAddr,
       }),
     );
   }
 
-  // --------------------------------------- cnfts (must come after collection mint created above)
+  // --------------------------------------- cnfts
 
   //has to be sequential to ensure index is correct
   let leaves: {

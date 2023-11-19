@@ -3,7 +3,6 @@ import { TensorWhitelistSDK } from '@tensor-hq/tensorswap-ts';
 import { keccak256 } from 'js-sha3';
 import { MerkleTree } from 'merkletreejs';
 import { buildAndSendTx } from './txs';
-export { TensorWhitelistSDK } from '@tensor-hq/tensorswap-ts';
 
 export const generateTreeOfSize = (size: number, targetMints: PublicKey[]) => {
   const leaves = targetMints.map((m) => m.toBuffer());

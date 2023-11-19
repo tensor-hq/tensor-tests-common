@@ -8,6 +8,7 @@ import {
   MintInstructionArgs,
   TokenStandard,
   VerificationArgs,
+  createSetCollectionSizeInstruction,
 } from '@metaplex-foundation/mpl-token-metadata';
 import {
   ASSOCIATED_TOKEN_PROGRAM_ID,
@@ -29,6 +30,7 @@ import {
   findMasterEditionPda,
   findMetadataPda,
   findTokenRecordPda,
+  isNullLike,
 } from '@tensor-hq/tensor-common';
 import { buildAndSendTx, createFundedWallet } from './txs';
 
@@ -75,6 +77,7 @@ export const createNft = async ({
   tokenStandard,
   royaltyBps,
   creators,
+  setCollSize,
   collection,
   collectionVerified = true,
   ruleSet = null,
@@ -86,6 +89,7 @@ export const createNft = async ({
   tokenStandard: TokenStandard;
   royaltyBps?: number;
   creators?: CreatorInput[];
+  setCollSize?: number;
   collection?: Keypair;
   collectionVerified?: boolean;
   ruleSet?: PublicKey | null;
@@ -226,12 +230,33 @@ export const createNft = async ({
     }) ?? [],
   );
 
+  const collSizeIxs = isNullLike(setCollSize)
+    ? []
+    : [
+        createSetCollectionSizeInstruction(
+          {
+            collectionMetadata: metadata,
+            collectionAuthority: owner.publicKey,
+            collectionMint: mint.publicKey,
+          },
+          {
+            setCollectionSizeArgs: { size: setCollSize },
+          },
+        ),
+      ];
+
   // --------------------------------------- send
 
   await buildAndSendTx({
     conn,
     payer,
-    ixs: [createIx, mintIx, ...verifyCollIxs, ...verifyCreatorIxs],
+    ixs: [
+      createIx,
+      mintIx,
+      ...verifyCollIxs,
+      ...verifyCreatorIxs,
+      ...collSizeIxs,
+    ],
     extraSigners: dedupeList(
       filterNullLike([
         owner,

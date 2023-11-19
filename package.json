@@ -1,6 +1,6 @@
 {
   "name": "@tensor-hq/tensor-tests-common",
-  "version": "0.1.7",
+  "version": "0.1.13",
   "description": "Common TEST utility methods used by Tensor.",
   "sideEffects": false,
   "module": "./dist/esm/index.js",
