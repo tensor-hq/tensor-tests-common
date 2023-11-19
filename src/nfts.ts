@@ -36,11 +36,10 @@ import {
   findMetadataPda,
   isNullLike,
   prependComputeIxs,
-  test_utils,
   TMETA_PROG_ID,
 } from '@tensor-hq/tensor-common';
-
-const { makeMintTwoAta, makeNTraders, buildAndSendTx } = test_utils;
+import { makeMintTwoAta } from './ata';
+import { buildAndSendTx, makeNTraders } from './txs';
 
 export const DEFAULT_DEPTH_SIZE: ValidDepthSizePair = {
   maxDepth: 14,
@@ -143,7 +142,6 @@ export const initCollection = async ({
     conn,
     payer: owner,
     ixs: [collectionMeatadataIX, collectionMasterEditionIX, sizeCollectionIX],
-    extraSigners: [owner],
   });
 
   return {
@@ -202,7 +200,7 @@ export const makeTree = async ({
     conn,
     payer: treeOwner,
     ixs: [allocTreeIx, createTreeIx],
-    extraSigners: [merkleTreeKeypair, treeOwner],
+    extraSigners: [merkleTreeKeypair],
   });
 
   return {
@@ -335,7 +333,6 @@ export const mintCNft = async ({
     conn,
     payer: treeOwner,
     ixs: [mintIx],
-    extraSigners: [treeOwner],
   });
 
   console.log('✅ minted', sig);
@@ -561,7 +558,46 @@ export const makeNfts = async ({
           share: 100 / nrCreators,
         }));
 
-  // --------------------------------------- cnfts
+  // --------------------------------------- pnfts
+
+  const traderAPnfts: Awaited<ReturnType<typeof makeMintTwoAta>>[] = [];
+  const traderBPnfts: Awaited<ReturnType<typeof makeMintTwoAta>>[] = [];
+
+  for (let index = 0; index < pnftMintsToTraderA; index++) {
+    traderAPnfts.push(
+      await makeMintTwoAta({
+        conn,
+        payer,
+        owner: traderA,
+        other: traderB,
+        royaltyBps: sellerFeeBasisPoints,
+        creators,
+        collection,
+        collectionVerified: false,
+        programmable: true, // pnfts cannot verify currently
+        ruleSetAddr,
+      }),
+    );
+  }
+
+  for (let index = 0; index < pnftMints - pnftMintsToTraderA; index++) {
+    traderBPnfts.push(
+      await makeMintTwoAta({
+        conn,
+        payer,
+        owner: traderB,
+        other: traderA,
+        royaltyBps: sellerFeeBasisPoints,
+        creators,
+        collection,
+        collectionVerified: false, // pnfts cannot verify currently
+        programmable: true,
+        ruleSetAddr,
+      }),
+    );
+  }
+
+  // --------------------------------------- cnfts (must come after collection mint created above)
 
   //has to be sequential to ensure index is correct
   let leaves: {
@@ -652,45 +688,6 @@ export const makeNfts = async ({
       return { index, assetId, leaf, metadata };
     }),
   );
-
-  // --------------------------------------- pnfts
-
-  const traderAPnfts: Awaited<ReturnType<typeof makeMintTwoAta>>[] = [];
-  const traderBPnfts: Awaited<ReturnType<typeof makeMintTwoAta>>[] = [];
-
-  for (let index = 0; index < pnftMintsToTraderA; index++) {
-    traderAPnfts.push(
-      await makeMintTwoAta({
-        conn,
-        payer,
-        owner: traderA,
-        other: traderB,
-        royaltyBps: sellerFeeBasisPoints,
-        creators,
-        collection,
-        collectionVerified: true,
-        programmable: false, // pnfts cannot verify currently
-        ruleSetAddr,
-      }),
-    );
-  }
-
-  for (let index = 0; index < pnftMints - pnftMintsToTraderA; index++) {
-    traderBPnfts.push(
-      await makeMintTwoAta({
-        conn,
-        payer,
-        owner: traderB,
-        other: traderA,
-        royaltyBps: sellerFeeBasisPoints,
-        creators,
-        collection,
-        collectionVerified: true,
-        programmable: false, // pnfts cannot verify currently
-        ruleSetAddr,
-      }),
-    );
-  }
 
   console.log('✅ setup done');
 
