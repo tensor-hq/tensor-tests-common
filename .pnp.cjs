@@ -224,11 +224,39 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "@metaplex-foundation/mpl-token-auth-rules",\
-        "npm:2.0.0"\
+        "virtual:6f70e3caa70acf7f94a717e147588aa9c28c01a34eb961f45ca4a0feac496f7d835abf68362c676a6646891535e636a0e456ac639bbb3c48d14f1ec4bc67ac52#npm:3.0.1"\
       ],\
       [\
         "@metaplex-foundation/mpl-token-metadata",\
         "npm:2.13.0"\
+      ],\
+      [\
+        "@metaplex-foundation/umi",\
+        "npm:0.8.10"\
+      ],\
+      [\
+        "@metaplex-foundation/umi-options",\
+        "npm:0.8.9"\
+      ],\
+      [\
+        "@metaplex-foundation/umi-public-keys",\
+        "npm:0.8.9"\
+      ],\
+      [\
+        "@metaplex-foundation/umi-serializers",\
+        "npm:0.8.9"\
+      ],\
+      [\
+        "@metaplex-foundation/umi-serializers-core",\
+        "npm:0.8.9"\
+      ],\
+      [\
+        "@metaplex-foundation/umi-serializers-encodings",\
+        "npm:0.8.9"\
+      ],\
+      [\
+        "@metaplex-foundation/umi-serializers-numbers",\
+        "npm:0.8.9"\
       ],\
       [\
         "@msgpack/msgpack",\
@@ -1728,13 +1756,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@coral-xyz/anchor", "npm:0.29.0"],\
             ["@metaplex-foundation/js", "npm:0.20.1"],\
             ["@metaplex-foundation/mpl-bubblegum", "npm:0.8.0"],\
-            ["@metaplex-foundation/mpl-token-auth-rules", "npm:2.0.0"],\
+            ["@metaplex-foundation/mpl-token-auth-rules", "virtual:6f70e3caa70acf7f94a717e147588aa9c28c01a34eb961f45ca4a0feac496f7d835abf68362c676a6646891535e636a0e456ac639bbb3c48d14f1ec4bc67ac52#npm:3.0.1"],\
             ["@metaplex-foundation/mpl-token-metadata", "npm:2.13.0"],\
+            ["@metaplex-foundation/umi", "npm:0.8.10"],\
             ["@msgpack/msgpack", "npm:3.0.0-beta2"],\
             ["@saberhq/solana-contrib", "virtual:6f70e3caa70acf7f94a717e147588aa9c28c01a34eb961f45ca4a0feac496f7d835abf68362c676a6646891535e636a0e456ac639bbb3c48d14f1ec4bc67ac52#npm:1.14.11"],\
             ["@solana/spl-account-compression", "virtual:6f70e3caa70acf7f94a717e147588aa9c28c01a34eb961f45ca4a0feac496f7d835abf68362c676a6646891535e636a0e456ac639bbb3c48d14f1ec4bc67ac52#npm:0.2.0"],\
             ["@solana/spl-token", "virtual:6f70e3caa70acf7f94a717e147588aa9c28c01a34eb961f45ca4a0feac496f7d835abf68362c676a6646891535e636a0e456ac639bbb3c48d14f1ec4bc67ac52#npm:0.3.9"],\
             ["@tensor-hq/tensor-common", "npm:1.0.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40tensor-hq%2Ftensor-common%2F1.0.3%2Ff20c6d7696d9a78b961951b7dd284183d97dc554"],\
+            ["@tensor-hq/tensor-tests-common", "workspace:."],\
             ["@tensor-hq/tensorswap-ts", "npm:2.0.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40tensor-hq%2Ftensorswap-ts%2F2.0.2%2F801e002fadf97852e83306d8fc71a3bcdb65180d"],\
             ["@types/chai", "npm:4.3.10"],\
             ["@types/mocha", "npm:10.0.4"],\
@@ -2607,17 +2637,24 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@metaplex-foundation/mpl-token-auth-rules", [\
-        ["npm:2.0.0", {\
-          "packageLocation": "./.yarn/cache/@metaplex-foundation-mpl-token-auth-rules-npm-2.0.0-f65f2d34d2-968bcd7435.zip/node_modules/@metaplex-foundation/mpl-token-auth-rules/",\
+        ["npm:3.0.1", {\
+          "packageLocation": "./.yarn/cache/@metaplex-foundation-mpl-token-auth-rules-npm-3.0.1-0538fe1c4a-72a69bd426.zip/node_modules/@metaplex-foundation/mpl-token-auth-rules/",\
           "packageDependencies": [\
-            ["@metaplex-foundation/mpl-token-auth-rules", "npm:2.0.0"],\
-            ["@metaplex-foundation/beet", "npm:0.7.1"],\
-            ["@metaplex-foundation/beet-solana", "npm:0.4.0"],\
-            ["@metaplex-foundation/cusper", "npm:0.0.2"],\
+            ["@metaplex-foundation/mpl-token-auth-rules", "npm:3.0.1"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:6f70e3caa70acf7f94a717e147588aa9c28c01a34eb961f45ca4a0feac496f7d835abf68362c676a6646891535e636a0e456ac639bbb3c48d14f1ec4bc67ac52#npm:3.0.1", {\
+          "packageLocation": "./.yarn/__virtual__/@metaplex-foundation-mpl-token-auth-rules-virtual-7ff790889f/0/cache/@metaplex-foundation-mpl-token-auth-rules-npm-3.0.1-0538fe1c4a-72a69bd426.zip/node_modules/@metaplex-foundation/mpl-token-auth-rules/",\
+          "packageDependencies": [\
+            ["@metaplex-foundation/mpl-token-auth-rules", "virtual:6f70e3caa70acf7f94a717e147588aa9c28c01a34eb961f45ca4a0feac496f7d835abf68362c676a6646891535e636a0e456ac639bbb3c48d14f1ec4bc67ac52#npm:3.0.1"],\
+            ["@metaplex-foundation/umi", "npm:0.8.10"],\
             ["@msgpack/msgpack", "npm:2.8.0"],\
-            ["@solana/spl-token", "virtual:ce0093ab8d79231cde7a8946963cc311bd300dc81fef3d74a1725701b21e6005d4f3aa761773ed6e5391d5eda88fc55d7820063a243ec7efa279c8a647988571#npm:0.3.9"],\
-            ["@solana/web3.js", "npm:1.87.6"],\
-            ["bn.js", "npm:5.2.1"]\
+            ["@types/metaplex-foundation__umi", null]\
+          ],\
+          "packagePeers": [\
+            "@metaplex-foundation/umi",\
+            "@types/metaplex-foundation__umi"\
           ],\
           "linkType": "HARD"\
         }]\
@@ -2634,6 +2671,80 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@solana/web3.js", "npm:1.87.6"],\
             ["bn.js", "npm:5.2.1"],\
             ["debug", "virtual:4b12ba5111caf7e8338099bdbc7cb046a9f8e079a44e74d0c03dca469876e3071ebbe671c5e90ae6b78ae33e22c205fa5ed32169a4aabd1404b13c56d09986e1#npm:4.3.4"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@metaplex-foundation/umi", [\
+        ["npm:0.8.10", {\
+          "packageLocation": "./.yarn/cache/@metaplex-foundation-umi-npm-0.8.10-038e3ffdee-c2978a41da.zip/node_modules/@metaplex-foundation/umi/",\
+          "packageDependencies": [\
+            ["@metaplex-foundation/umi", "npm:0.8.10"],\
+            ["@metaplex-foundation/umi-options", "npm:0.8.9"],\
+            ["@metaplex-foundation/umi-public-keys", "npm:0.8.9"],\
+            ["@metaplex-foundation/umi-serializers", "npm:0.8.9"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@metaplex-foundation/umi-options", [\
+        ["npm:0.8.9", {\
+          "packageLocation": "./.yarn/cache/@metaplex-foundation-umi-options-npm-0.8.9-029c8b22eb-09ea3d2a9a.zip/node_modules/@metaplex-foundation/umi-options/",\
+          "packageDependencies": [\
+            ["@metaplex-foundation/umi-options", "npm:0.8.9"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@metaplex-foundation/umi-public-keys", [\
+        ["npm:0.8.9", {\
+          "packageLocation": "./.yarn/cache/@metaplex-foundation-umi-public-keys-npm-0.8.9-5c5b22f6b0-f5d1bf557a.zip/node_modules/@metaplex-foundation/umi-public-keys/",\
+          "packageDependencies": [\
+            ["@metaplex-foundation/umi-public-keys", "npm:0.8.9"],\
+            ["@metaplex-foundation/umi-serializers-encodings", "npm:0.8.9"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@metaplex-foundation/umi-serializers", [\
+        ["npm:0.8.9", {\
+          "packageLocation": "./.yarn/cache/@metaplex-foundation-umi-serializers-npm-0.8.9-ab60f0d147-4f76ef8d3e.zip/node_modules/@metaplex-foundation/umi-serializers/",\
+          "packageDependencies": [\
+            ["@metaplex-foundation/umi-serializers", "npm:0.8.9"],\
+            ["@metaplex-foundation/umi-options", "npm:0.8.9"],\
+            ["@metaplex-foundation/umi-public-keys", "npm:0.8.9"],\
+            ["@metaplex-foundation/umi-serializers-core", "npm:0.8.9"],\
+            ["@metaplex-foundation/umi-serializers-encodings", "npm:0.8.9"],\
+            ["@metaplex-foundation/umi-serializers-numbers", "npm:0.8.9"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@metaplex-foundation/umi-serializers-core", [\
+        ["npm:0.8.9", {\
+          "packageLocation": "./.yarn/cache/@metaplex-foundation-umi-serializers-core-npm-0.8.9-59ec1e19c3-5305f893f3.zip/node_modules/@metaplex-foundation/umi-serializers-core/",\
+          "packageDependencies": [\
+            ["@metaplex-foundation/umi-serializers-core", "npm:0.8.9"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@metaplex-foundation/umi-serializers-encodings", [\
+        ["npm:0.8.9", {\
+          "packageLocation": "./.yarn/cache/@metaplex-foundation-umi-serializers-encodings-npm-0.8.9-462337eed1-f32d1acfa0.zip/node_modules/@metaplex-foundation/umi-serializers-encodings/",\
+          "packageDependencies": [\
+            ["@metaplex-foundation/umi-serializers-encodings", "npm:0.8.9"],\
+            ["@metaplex-foundation/umi-serializers-core", "npm:0.8.9"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@metaplex-foundation/umi-serializers-numbers", [\
+        ["npm:0.8.9", {\
+          "packageLocation": "./.yarn/cache/@metaplex-foundation-umi-serializers-numbers-npm-0.8.9-c2b8e41aaa-3b8144cbcb.zip/node_modules/@metaplex-foundation/umi-serializers-numbers/",\
+          "packageDependencies": [\
+            ["@metaplex-foundation/umi-serializers-numbers", "npm:0.8.9"],\
+            ["@metaplex-foundation/umi-serializers-core", "npm:0.8.9"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -3228,17 +3339,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         ["workspace:.", {\
           "packageLocation": "./",\
           "packageDependencies": [\
-            ["@tensor-hq/tensor-tests-common", "workspace:."],\
             ["@coral-xyz/anchor", "npm:0.29.0"],\
             ["@metaplex-foundation/js", "npm:0.20.1"],\
             ["@metaplex-foundation/mpl-bubblegum", "npm:0.8.0"],\
-            ["@metaplex-foundation/mpl-token-auth-rules", "npm:2.0.0"],\
+            ["@metaplex-foundation/mpl-token-auth-rules", "virtual:6f70e3caa70acf7f94a717e147588aa9c28c01a34eb961f45ca4a0feac496f7d835abf68362c676a6646891535e636a0e456ac639bbb3c48d14f1ec4bc67ac52#npm:3.0.1"],\
             ["@metaplex-foundation/mpl-token-metadata", "npm:2.13.0"],\
+            ["@metaplex-foundation/umi", "npm:0.8.10"],\
             ["@msgpack/msgpack", "npm:3.0.0-beta2"],\
             ["@saberhq/solana-contrib", "virtual:6f70e3caa70acf7f94a717e147588aa9c28c01a34eb961f45ca4a0feac496f7d835abf68362c676a6646891535e636a0e456ac639bbb3c48d14f1ec4bc67ac52#npm:1.14.11"],\
             ["@solana/spl-account-compression", "virtual:6f70e3caa70acf7f94a717e147588aa9c28c01a34eb961f45ca4a0feac496f7d835abf68362c676a6646891535e636a0e456ac639bbb3c48d14f1ec4bc67ac52#npm:0.2.0"],\
             ["@solana/spl-token", "virtual:6f70e3caa70acf7f94a717e147588aa9c28c01a34eb961f45ca4a0feac496f7d835abf68362c676a6646891535e636a0e456ac639bbb3c48d14f1ec4bc67ac52#npm:0.3.9"],\
             ["@tensor-hq/tensor-common", "npm:1.0.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40tensor-hq%2Ftensor-common%2F1.0.3%2Ff20c6d7696d9a78b961951b7dd284183d97dc554"],\
+            ["@tensor-hq/tensor-tests-common", "workspace:."],\
             ["@tensor-hq/tensorswap-ts", "npm:2.0.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40tensor-hq%2Ftensorswap-ts%2F2.0.2%2F801e002fadf97852e83306d8fc71a3bcdb65180d"],\
             ["@types/chai", "npm:4.3.10"],\
             ["@types/mocha", "npm:10.0.4"],\

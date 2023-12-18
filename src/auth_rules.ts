@@ -1,137 +1,84 @@
 import {
-  createCreateOrUpdateInstruction,
-  findRuleSetPDA,
+  anyV2,
+  createOrUpdateV1,
+  findRuleSetPda,
+  notV2,
+  passV2,
+  programOwnedListV2,
+  RuleSetRevisionV2,
 } from '@metaplex-foundation/mpl-token-auth-rules';
-import { encode } from '@msgpack/msgpack';
-import { Connection, Keypair, PublicKey, SystemProgram } from '@solana/web3.js';
-import { AUTH_PROG_ID } from '@tensor-hq/tensor-common';
-import { buildAndSendTx } from './txs';
+import type { Umi } from '@metaplex-foundation/umi';
+import { PublicKey } from '@solana/web3.js';
 
-export const createTokenAuthorizationRules = async ({
-  conn,
-  payer,
+export const createDefaultRuleSet = async ({
+  umi,
   name = 'a',
   data,
-  whitelistedPrograms,
+  blocked,
+  enableDelegate,
 }: {
-  conn: Connection;
-  payer: Keypair;
+  umi: Umi;
   name?: string;
   data?: Uint8Array;
-  whitelistedPrograms: PublicKey[];
+  blocked?: PublicKey[];
+  enableDelegate?: boolean;
 }) => {
-  const [ruleSetAddress] = await findRuleSetPDA(payer.publicKey, name);
-
-  const programs = whitelistedPrograms.map((p) => Array.from(p.toBytes()));
+  const [ruleSetPda] = findRuleSetPda(umi, {
+    owner: umi.identity.publicKey,
+    name,
+  });
+  const denyList = (fields: string[]) =>
+    notV2(anyV2(fields.map((f) => programOwnedListV2(f, blocked ?? []))));
 
   //ruleset relevant for transfers
-  const ruleSet = {
-    libVersion: 1,
-    ruleSetName: name,
-    owner: Array.from(payer.publicKey.toBytes()),
+  const ruleSet: RuleSetRevisionV2 = {
+    libVersion: 2,
+    name,
+    owner: umi.identity.publicKey,
     operations: {
-      'Transfer:Owner': {
-        All: {
-          rules: [
-            //no space
-            // {
-            //   Amount: {
-            //     amount: 1,
-            //     operator: "Eq",
-            //     field: "Amount",
-            //   },
-            // },
-            {
-              Any: {
-                rules: [
-                  {
-                    ProgramOwnedList: {
-                      programs,
-                      field: 'Source',
-                    },
-                  },
-                  {
-                    ProgramOwnedList: {
-                      programs,
-                      field: 'Destination',
-                    },
-                  },
-                  {
-                    ProgramOwnedList: {
-                      programs,
-                      field: 'Authority',
-                    },
-                  },
-                ],
-              },
-            },
-          ],
-        },
-      },
-      // DISABLE THESE IF YOU WANT A PNFT W/O A DELEGATE RULE
-      // "Delegate:Transfer": {
-      //   ProgramOwnedList: {
-      //     programs: [Array.from(whitelistedProgram.toBytes())],
-      //     field: "Delegate",
-      //   },
-      // },
-      // "Transfer:TransferDelegate": {
-      //   All: {
-      //     rules: [
-      //       //no space
-      //       // {
-      //       //   Amount: {
-      //       //     amount: 1,
-      //       //     operator: "Eq",
-      //       //     field: "Amount",
-      //       //   },
-      //       // },
-      //       {
-      //         Any: {
-      //           rules: [
-      //             {
-      //               ProgramOwnedList: {
-      //                 programs: [Array.from(whitelistedProgram.toBytes())],
-      //                 field: "Source",
-      //               },
-      //             },
-      //             {
-      //               ProgramOwnedList: {
-      //                 programs: [Array.from(whitelistedProgram.toBytes())],
-      //                 field: "Destination",
-      //               },
-      //             },
-      //             {
-      //               ProgramOwnedList: {
-      //                 programs: [Array.from(whitelistedProgram.toBytes())],
-      //                 field: "Authority",
-      //               },
-      //             },
-      //           ],
-      //         },
-      //       },
-      //     ],
-      //   },
-      // },
+      'Transfer:Owner': denyList(['Source', 'Destination', 'Authority']),
+      ...(enableDelegate
+        ? {
+            'Delegate:Transfer': denyList(['Delegate']),
+            'Transfer:SaleDelegate': denyList([
+              'Source',
+              'Destination',
+              'Authority',
+            ]),
+            'Transfer:TransferDelegate': denyList([
+              'Source',
+              'Destination',
+              'Authority',
+            ]),
+          }
+        : undefined),
+      ...Object.fromEntries(
+        [
+          'Transfer:WalletToWallet',
+          'Transfer:MigrationDelegate',
+          'Delegate:LockedTransfer',
+          'Delegate:Update',
+          'Delegate:Utility',
+          'Delegate:Staking',
+          'Delegate:Authority',
+          'Delegate:Collection',
+          'Delegate:Use',
+          'Delegate:Sale',
+        ].map((t) => [t, passV2()]),
+      ),
     },
   };
 
-  // Encode the file using msgpack so the pre-encoded data can be written directly to a Solana program account
-  let finalData = data ?? encode(ruleSet);
-
-  let createIX = createCreateOrUpdateInstruction(
-    {
-      payer: payer.publicKey,
-      ruleSetPda: ruleSetAddress,
-      systemProgram: SystemProgram.programId,
+  let createIx = createOrUpdateV1(umi, {
+    payer: umi.identity,
+    ruleSetPda,
+    ruleSetRevision: {
+      __option: 'Some',
+      value: ruleSet,
     },
-    {
-      createOrUpdateArgs: { __kind: 'V1', serializedRuleSet: finalData },
-    },
-    AUTH_PROG_ID,
-  );
+  });
 
-  await buildAndSendTx({ conn, payer, ixs: [createIX] });
+  await createIx.sendAndConfirm(umi);
 
-  return ruleSetAddress;
+  return ruleSetPda;
 };

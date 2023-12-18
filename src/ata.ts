@@ -79,6 +79,7 @@ export const createNft = async ({
   creators,
   setCollSize,
   collection,
+  collectionUA,
   collectionVerified = true,
   ruleSet = null,
 }: {
@@ -91,6 +92,8 @@ export const createNft = async ({
   creators?: CreatorInput[];
   setCollSize?: number;
   collection?: Keypair;
+  /** Must pass (if not owner) to verify collection */
+  collectionUA?: Keypair;
   collectionVerified?: boolean;
   ruleSet?: PublicKey | null;
 }) => {
@@ -198,7 +201,7 @@ export const createNft = async ({
       ? [
           createVerifyInstruction(
             {
-              authority: owner.publicKey,
+              authority: collectionUA?.publicKey ?? owner.publicKey,
               metadata,
               collectionMint: collection.publicKey,
               collectionMetadata: findMetadataPda(collection.publicKey)[0],
@@ -262,6 +265,7 @@ export const createNft = async ({
         owner,
         mint,
         ...(creators?.map((c) => c.authority) ?? []),
+        collectionUA,
       ]),
       (k) => k.publicKey.toBase58(),
     ),
@@ -282,6 +286,7 @@ export const createAndFundAta = async ({
   royaltyBps,
   creators,
   collection,
+  collectionUA,
   collectionVerified,
   createCollection = true,
   programmable = false,
@@ -295,6 +300,8 @@ export const createAndFundAta = async ({
   creators?: CreatorInput[];
   collection?: Keypair;
   createCollection?: boolean;
+  /** Must pass (if not owner) to verify collection */
+  collectionUA?: Keypair;
   collectionVerified?: boolean;
   programmable?: boolean;
   ruleSetAddr?: PublicKey;
@@ -334,6 +341,7 @@ export const createAndFundAta = async ({
     royaltyBps,
     creators,
     collection,
+    collectionUA,
     collectionVerified,
     ruleSet: ruleSetAddr,
     tokenStandard: programmable
@@ -360,6 +368,7 @@ export const makeMintTwoAta = async ({
   royaltyBps,
   creators,
   collection,
+  collectionUA,
   collectionVerified,
   createCollection,
   programmable,
@@ -372,6 +381,8 @@ export const makeMintTwoAta = async ({
   royaltyBps?: number;
   creators?: CreatorInput[];
   collection?: Keypair;
+  /** Must pass (if not owner) to verify collection */
+  collectionUA?: Keypair;
   collectionVerified?: boolean;
   createCollection?: boolean;
   programmable?: boolean;
@@ -385,6 +396,7 @@ export const makeMintTwoAta = async ({
       royaltyBps,
       creators,
       collection,
+      collectionUA,
       collectionVerified,
       createCollection,
       programmable,
@@ -400,3 +412,5 @@ export const makeMintTwoAta = async ({
 
   return { mint, metadata, ata, otherAta, masterEdition, collectionInfo };
 };
+1;
+export type MintTwoAta = Awaited<ReturnType<typeof makeMintTwoAta>>;

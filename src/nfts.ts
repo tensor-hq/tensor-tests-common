@@ -29,9 +29,16 @@ import {
   SPL_NOOP_PROGRAM_ID,
   ValidDepthSizePair,
 } from '@solana/spl-account-compression';
-import { createAccount, createMint, mintTo } from '@solana/spl-token';
+import {
+  createAccount,
+  createMint,
+  getAccount,
+  getAssociatedTokenAddressSync,
+  mintTo,
+} from '@solana/spl-token';
 import { Connection, Keypair, PublicKey, SystemProgram } from '@solana/web3.js';
 import {
+  findBubblegumSignerPda,
   findBubblegumTreeAuthorityPda,
   findMasterEditionPda,
   findMetadataPda,
@@ -39,6 +46,7 @@ import {
   prependComputeIxs,
   TMETA_PROG_ID,
 } from '@tensor-hq/tensor-common';
+import { expect } from 'chai';
 import { createNft, makeMintTwoAta } from './ata';
 import { buildAndSendTx, makeNTraders } from './txs';
 
@@ -281,10 +289,7 @@ export const mintCNft = async ({
 
   const [treeAuthority] = findBubblegumTreeAuthorityPda(merkleTree);
 
-  const [bgumSigner, __] = await PublicKey.findProgramAddress(
-    [Buffer.from('collection_cpi', 'utf8')],
-    BUBBLEGUM_PROGRAM_ID,
-  );
+  const [bgumSigner] = findBubblegumSignerPda();
 
   const mintIx =
     !!metadata.collection && !unverifiedCollection
@@ -495,6 +500,13 @@ export const verifyCNftCreator = async ({
   return { metadata, leaf, assetId };
 };
 
+export type TestCnft = {
+  index: number;
+  assetId: PublicKey;
+  metadata: MetadataArgs;
+  leaf: Buffer;
+};
+
 export const makeTestNfts = async ({
   conn,
   payer,
@@ -573,12 +585,12 @@ export const makeTestNfts = async ({
 
   // --------------------------------------- pnfts
 
-  const traderAPnfts: Awaited<ReturnType<typeof makeMintTwoAta>>[] = [];
-  const traderBPnfts: Awaited<ReturnType<typeof makeMintTwoAta>>[] = [];
+  const traderAPromises: ReturnType<typeof makeMintTwoAta>[] = [];
+  const traderBPromises: ReturnType<typeof makeMintTwoAta>[] = [];
 
   for (let index = 0; index < pnftMintsToTraderA; index++) {
-    traderAPnfts.push(
-      await makeMintTwoAta({
+    traderAPromises.push(
+      makeMintTwoAta({
         conn,
         payer,
         owner: traderA,
@@ -586,17 +598,18 @@ export const makeTestNfts = async ({
         royaltyBps: sellerFeeBasisPoints,
         creators,
         collection,
-        collectionVerified: false,
+        collectionUA: treeOwner,
+        collectionVerified: true,
         createCollection: false,
-        programmable: true, // pnfts cannot verify currently
+        programmable: true,
         ruleSetAddr,
       }),
     );
   }
 
   for (let index = 0; index < pnftMints - pnftMintsToTraderA; index++) {
-    traderBPnfts.push(
-      await makeMintTwoAta({
+    traderBPromises.push(
+      makeMintTwoAta({
         conn,
         payer,
         owner: traderB,
@@ -604,7 +617,8 @@ export const makeTestNfts = async ({
         royaltyBps: sellerFeeBasisPoints,
         creators,
         collection,
-        collectionVerified: false, // pnfts cannot verify currently
+        collectionUA: treeOwner,
+        collectionVerified: true,
         createCollection: false,
         programmable: true,
         ruleSetAddr,
@@ -614,49 +628,53 @@ export const makeTestNfts = async ({
 
   // --------------------------------------- cnfts
 
-  //has to be sequential to ensure index is correct
-  let leaves: {
-    index: number;
-    assetId: PublicKey;
-    metadata: MetadataArgs;
-    leaf: Buffer;
-  }[] = [];
-  for (let index = 0; index < cnftMints; index++) {
-    const metadata = makeCNftMeta({
-      collectionMint: collectionless ? undefined : collection.publicKey,
-      nrCreators,
-      randomizeName,
-      unverifiedCollection,
-      creators,
-    });
+  let leaves: TestCnft[] = [];
+  const makeCnfts = async () => {
+    //has to be sequential to ensure index is correct
+    for (let index = 0; index < cnftMints; index++) {
+      const metadata = makeCNftMeta({
+        collectionMint: collectionless ? undefined : collection.publicKey,
+        nrCreators,
+        randomizeName,
+        unverifiedCollection,
+        creators,
+        sellerFeeBasisPoints,
+      });
 
-    let receiver = traderA.publicKey;
-    if (!isNullLike(cnftMintsToTraderA) && index >= cnftMintsToTraderA) {
-      receiver = traderB.publicKey;
+      let receiver = traderA.publicKey;
+      if (!isNullLike(cnftMintsToTraderA) && index >= cnftMintsToTraderA) {
+        receiver = traderB.publicKey;
+      }
+
+      await mintCNft({
+        conn,
+        merkleTree,
+        metadata,
+        treeOwner,
+        receiver,
+        unverifiedCollection,
+      });
+
+      const { leaf, assetId } = await makeLeaf({
+        index,
+        merkleTree,
+        metadata,
+        owner: receiver,
+      });
+      leaves.push({
+        index,
+        metadata,
+        assetId,
+        leaf,
+      });
     }
+  };
 
-    await mintCNft({
-      conn,
-      merkleTree,
-      metadata,
-      treeOwner,
-      receiver,
-      unverifiedCollection,
-    });
-
-    const { leaf, assetId } = await makeLeaf({
-      index,
-      merkleTree,
-      metadata,
-      owner: receiver,
-    });
-    leaves.push({
-      index,
-      metadata,
-      assetId,
-      leaf,
-    });
-  }
+  const [traderAPnfts, traderBPnfts] = await Promise.all([
+    Promise.all(traderAPromises),
+    Promise.all(traderBPromises),
+    makeCnfts(),
+  ]);
 
   // simulate an in-mem tree
   const memTree = MerkleTree.sparseMerkleTreeFromLeaves(
@@ -714,6 +732,8 @@ export const makeTestNfts = async ({
     traderA,
     traderB,
     collectionMint: collection.publicKey,
+    traderACnfts: leaves.slice(0, cnftMintsToTraderA),
+    traderBCnfts: leaves.slice(cnftMintsToTraderA),
     traderAPnfts,
     traderBPnfts,
     creators,
@@ -725,4 +745,16 @@ export const calcCreatorFees = (
   sellerFeeBasisPoints: number,
 ) => {
   return Math.trunc((amount * sellerFeeBasisPoints) / 1e4);
+};
+
+export const expectHasNftAsync = async (
+  conn: Connection,
+  mint: PublicKey,
+  owner: PublicKey,
+) => {
+  expect(
+    (
+      await getAccount(conn, getAssociatedTokenAddressSync(mint, owner, true))
+    ).amount.toString(),
+  ).eq('1');
 };

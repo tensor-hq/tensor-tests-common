@@ -173,7 +173,7 @@ export const withLamports = async <
   conn: Connection,
   accts: Accounts,
   callback: (results: {
-    [k in keyof Accounts]: number | undefined;
+    [k in keyof Accounts]: number;
   }) => Promise<R>,
 ): Promise<R> => {
   const results = Object.fromEntries(
@@ -197,4 +197,29 @@ export const simulateTxTable = async (
   const provider = new SolanaProvider(conn, broadcaster, wallet);
   const tx = new TransactionEnvelope(provider, ixs);
   console.log(await tx.simulateTable());
+};
+
+export const requestAirdrop = async (
+  conn: Connection,
+  addr: PublicKey,
+  amount: number,
+) => {
+  const [sig, blk] = await Promise.all([
+    conn.requestAirdrop(addr, amount),
+    conn.getLatestBlockhash(),
+  ]);
+  await conn.confirmTransaction({
+    signature: sig,
+    ...blk,
+  });
+};
+
+// print tx info like logs and errors
+export const printTx = async (conn: Connection, sig: string) => {
+  const tx = await conn.getTransaction(sig, {
+    maxSupportedTransactionVersion: 0,
+  });
+  console.log('Error:', tx?.meta?.err);
+  console.log('Logs:', tx?.meta?.logMessages);
+  return tx;
 };
