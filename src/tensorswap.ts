@@ -3,10 +3,10 @@ import {
   TensorSwapSDK,
   TensorWhitelistSDK,
   TSWAP_TAKER_FEE_BPS,
-} from '@tensor-hq/tensorswap-ts';
+} from '@tensor-oss/tensorswap-sdk';
 import { expect } from 'chai';
 import { buildAndSendTx } from './txs';
-export { TensorSwapSDK, TensorWhitelistSDK } from '@tensor-hq/tensorswap-ts';
+export { TensorSwapSDK, TensorWhitelistSDK } from '@tensor-oss/tensorswap-sdk';
 
 export const testInitWLAuthority = async ({
   conn,

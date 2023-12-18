@@ -1,5 +1,5 @@
 import { Connection, Keypair, PublicKey } from '@solana/web3.js';
-import { TensorWhitelistSDK } from '@tensor-hq/tensorswap-ts';
+import { TensorWhitelistSDK } from '@tensor-oss/tensorswap-sdk';
 import { keccak256 } from 'js-sha3';
 import { MerkleTree } from 'merkletreejs';
 import { buildAndSendTx } from './txs';
