@@ -1240,6 +1240,54 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@solana/codecs-core@npm:2.0.0-experimental.8618508":
+  version: 2.0.0-experimental.8618508
+  resolution: "@solana/codecs-core@npm:2.0.0-experimental.8618508"
+  checksum: 3f16d037b0cb7347e87b94558cf90cb10c8e50c08856d057b2844dc9ae19a5721e04f03058fa4ad45f7529531f6c2678c0cb088c6711169951a11c1ef508da57
+  languageName: node
+  linkType: hard
+
+"@solana/codecs-data-structures@npm:2.0.0-experimental.8618508":
+  version: 2.0.0-experimental.8618508
+  resolution: "@solana/codecs-data-structures@npm:2.0.0-experimental.8618508"
+  dependencies:
+    "@solana/codecs-core": 2.0.0-experimental.8618508
+    "@solana/codecs-numbers": 2.0.0-experimental.8618508
+  checksum: 1a72f82cad338bb6153eb7687fef860dffa2d1701961fc529f5051007a029f302621e92a05a51ad1d23a3bc4aa1d02d517cac0f4b28e9819d91686e18becd07c
+  languageName: node
+  linkType: hard
+
+"@solana/codecs-numbers@npm:2.0.0-experimental.8618508":
+  version: 2.0.0-experimental.8618508
+  resolution: "@solana/codecs-numbers@npm:2.0.0-experimental.8618508"
+  dependencies:
+    "@solana/codecs-core": 2.0.0-experimental.8618508
+  checksum: 7c80fc0a2deb654fb5e43b8cc267f6105eab6d9e18afcef43374768c82fa088d58b4872adc608c74b0f54a9e0822f4ae49772137d436d323b2b327770d867df7
+  languageName: node
+  linkType: hard
+
+"@solana/codecs-strings@npm:2.0.0-experimental.8618508":
+  version: 2.0.0-experimental.8618508
+  resolution: "@solana/codecs-strings@npm:2.0.0-experimental.8618508"
+  dependencies:
+    "@solana/codecs-core": 2.0.0-experimental.8618508
+    "@solana/codecs-numbers": 2.0.0-experimental.8618508
+  peerDependencies:
+    fastestsmallesttextencoderdecoder: ^1.0.22
+  checksum: 0186dbf1c6933ba451e0f5dc7be1092220d7a5551ee97ae09259d2b736d52273dbbda6dbf4bb847ed251fb1849399b4dc76889998d3bea1648c930b1c3ead895
+  languageName: node
+  linkType: hard
+
+"@solana/options@npm:2.0.0-experimental.8618508":
+  version: 2.0.0-experimental.8618508
+  resolution: "@solana/options@npm:2.0.0-experimental.8618508"
+  dependencies:
+    "@solana/codecs-core": 2.0.0-experimental.8618508
+    "@solana/codecs-numbers": 2.0.0-experimental.8618508
+  checksum: d260faec7a44d5c2e95edcea756fe5690bdc6685b2e4ee078226e74319eee6ab931aeedfb580b420e1c5987a1d28304898ed03cdcf6b19e253460a3101080c75
+  languageName: node
+  linkType: hard
+
 "@solana/spl-account-compression@npm:^0.1.4, @solana/spl-account-compression@npm:^0.1.8":
   version: 0.1.10
   resolution: "@solana/spl-account-compression@npm:0.1.10"
@@ -1272,6 +1320,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@solana/spl-token-metadata@npm:^0.1.2":
+  version: 0.1.2
+  resolution: "@solana/spl-token-metadata@npm:0.1.2"
+  dependencies:
+    "@solana/codecs-core": 2.0.0-experimental.8618508
+    "@solana/codecs-data-structures": 2.0.0-experimental.8618508
+    "@solana/codecs-numbers": 2.0.0-experimental.8618508
+    "@solana/codecs-strings": 2.0.0-experimental.8618508
+    "@solana/options": 2.0.0-experimental.8618508
+    "@solana/spl-type-length-value": 0.1.0
+  peerDependencies:
+    "@solana/web3.js": ^1.87.6
+  checksum: 9cd90aed86a2fcfa40cd209b61553641524c01d9888eb4a36f053315dfdc544aa66ad0e7a22d27a30d904648c0ec5c9db11791ac6fa87ec15a44322f7bf5077b
+  languageName: node
+  linkType: hard
+
 "@solana/spl-token@npm:^0.1.8":
   version: 0.1.8
   resolution: "@solana/spl-token@npm:0.1.8"
@@ -1296,6 +1360,29 @@ __metadata:
   peerDependencies:
     "@solana/web3.js": ^1.47.4
   checksum: 9313f92806284151ea099efe9cf766ea4dc7842041976597562193980ccd9eae18f3fedd3ee975ebb43a74ea3866769a90742c17e87564de05e4fd2dcd7d485c
+  languageName: node
+  linkType: hard
+
+"@solana/spl-token@npm:^0.4.0":
+  version: 0.4.1
+  resolution: "@solana/spl-token@npm:0.4.1"
+  dependencies:
+    "@solana/buffer-layout": ^4.0.0
+    "@solana/buffer-layout-utils": ^0.2.0
+    "@solana/spl-token-metadata": ^0.1.2
+    buffer: ^6.0.3
+  peerDependencies:
+    "@solana/web3.js": ^1.90.0
+  checksum: c7a8161fe9c5fdd57591d8963792a2e459fdd48e05774ca6bcd7df9b7a742ab8bbef09a013719e0ab150858551f9aa8ee8ecad0fe0cf066b58e07e255195fef7
+  languageName: node
+  linkType: hard
+
+"@solana/spl-type-length-value@npm:0.1.0":
+  version: 0.1.0
+  resolution: "@solana/spl-type-length-value@npm:0.1.0"
+  dependencies:
+    buffer: ^6.0.3
+  checksum: 9bea6d9638fd2093db4542b12ac657407950737bd00ed919448308df59bfeb9d97a96e471d7824ba4077daeb01bbb0cf9e410d412767555e49a5bfc6bfb9bc91
   languageName: node
   linkType: hard
 
@@ -1350,9 +1437,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tensor-hq/tensor-common@npm:^2.3.2":
-  version: 2.3.2
-  resolution: "@tensor-hq/tensor-common@npm:2.3.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40tensor-hq%2Ftensor-common%2F2.3.2%2F75e1f063ba188ff9fe8b18a09e8244ea2bce8d01"
+"@tensor-hq/tensor-common@npm:^5.3.0":
+  version: 5.3.1
+  resolution: "@tensor-hq/tensor-common@npm:5.3.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40tensor-hq%2Ftensor-common%2F5.3.1%2F31a9a33c7f57ee620688be50a89c415d4dfda971"
   dependencies:
     "@coral-xyz/anchor": ^0.26.0
     "@metaplex-foundation/mpl-auction-house": ^2.1.1
@@ -1368,7 +1455,7 @@ __metadata:
     exponential-backoff: ^3.1.1
     js-sha3: ^0.8.0
     semaphore: ^1.1.0
-  checksum: 264da54e5fd6b4714337dc83673e5c3e7d43d54211cdcf6e8a417d7cde03a255d3a6a01dc2618da33e433490f8f3d1e711262c9944b08e1b50201b40370c5ddf
+  checksum: 74aa4e139ed0dd7974354f886161469c79aee6e56f5fefc5db45ec04a8c93e872eb5b3115e79827b70699903cf1248093a60f664617edb1a0d16e00eb84a9c87
   languageName: node
   linkType: hard
 
@@ -1387,7 +1474,7 @@ __metadata:
     "@solana/spl-account-compression": ^0.2.0
     "@solana/spl-token": ^0.3.9
     "@tensor-hq/tensor-common": ^1.0.3
-    "@tensor-oss/tensorswap-sdk": ^2.0.6
+    "@tensor-oss/tensorswap-sdk": ^4.2.0
     "@types/chai": ^4.3.5
     "@types/mocha": ^10.0.1
     bs58: ^5.0.0
@@ -1404,25 +1491,25 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@tensor-oss/tensorswap-sdk@npm:^2.0.6":
-  version: 2.0.6
-  resolution: "@tensor-oss/tensorswap-sdk@npm:2.0.6"
+"@tensor-oss/tensorswap-sdk@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "@tensor-oss/tensorswap-sdk@npm:4.2.0"
   dependencies:
     "@coral-xyz/anchor": ^0.26.0
     "@msgpack/msgpack": ^2.8.0
     "@saberhq/solana-contrib": ^1.14.11
-    "@solana/spl-token": ^0.3.7
+    "@solana/spl-token": ^0.4.0
     "@solana/web3.js": ^1.73.0
-    "@tensor-hq/tensor-common": ^2.3.2
+    "@tensor-hq/tensor-common": ^5.3.0
     "@types/bn.js": ^5.1.0
     big.js: ^6.2.1
     bn.js: ^5.2.0
     js-sha256: ^0.9.0
     keccak256: ^1.0.6
     math-expression-evaluator: ^2.0.4
-    merkletreejs: ^0.2.32
+    merkletreejs: ^0.3.11
     uuid: ^8.3.2
-  checksum: c8e028cb2ada335dbc94278a9c8ae368d97bfe4be58cd86a5d58f82be469e3b519b0580eb3c512dfa65ba789fdfc33c9b73f5cd4dd028e880fd258b2780d177d
+  checksum: 76f7720ea7b987e5262236b0cd24099b6bb363e573c1ef1b0d517fc1c6670e1e5d83fbd86191729ddc0016b1cee87509c5ab87d8c4c158418536d9f69974d7eb
   languageName: node
   linkType: hard
 
@@ -2363,13 +2450,6 @@ __metadata:
   version: 1.3.0
   resolution: "crypto-hash@npm:1.3.0"
   checksum: a3a507e0d2b18fbd2da8088a1c62d0c53c009a99bbfa6d851cac069734ffa546922fa51bdd776d006459701cdda873463e5059ece3431aca048fd99e7573d138
-  languageName: node
-  linkType: hard
-
-"crypto-js@npm:^3.1.9-1":
-  version: 3.3.0
-  resolution: "crypto-js@npm:3.3.0"
-  checksum: 193923143a4784b2f974366068d96fe8280168fd3fef2bfea9551a5c3e32096f5a8fa49ff4eeb5bd0b9716d325618d38cfbe6125e359a4ef488fbca93e600824
   languageName: node
   linkType: hard
 
@@ -3407,19 +3487,6 @@ __metadata:
     inherits: ^2.0.1
     safe-buffer: ^5.1.2
   checksum: 098494d885684bcc4f92294b18ba61b7bd353c23147fbc4688c75b45cb8590f5a95fd4584d742415dcc52487f7a1ef6ea611cfa1543b0dc4492fe026357f3f0c
-  languageName: node
-  linkType: hard
-
-"merkletreejs@npm:^0.2.32":
-  version: 0.2.32
-  resolution: "merkletreejs@npm:0.2.32"
-  dependencies:
-    bignumber.js: ^9.0.1
-    buffer-reverse: ^1.0.1
-    crypto-js: ^3.1.9-1
-    treeify: ^1.1.0
-    web3-utils: ^1.3.4
-  checksum: 041b235adde94de584fdf5ef60138baca8d6f16bb48b3b7f714b607eaa76e4207ed5fef501ee5967371c56c5876804c4ff6da4705707f8cc0362d5c1e0358425
   languageName: node
   linkType: hard
 
