@@ -44,7 +44,7 @@ import {
   findMetadataPda,
   isNullLike,
   prependComputeIxs,
-  TMETA_PROG_ID,
+  TMETA_PROGRAM_ID,
 } from '@tensor-hq/tensor-common';
 import { expect } from 'chai';
 import { createNft, makeMintTwoAta } from './ata';
@@ -81,10 +81,10 @@ export const initCollection = async ({
   const [collectionMetadataAccount, _b] = await PublicKey.findProgramAddress(
     [
       Buffer.from('metadata', 'utf8'),
-      TMETA_PROG_ID.toBuffer(),
+      TMETA_PROGRAM_ID.toBuffer(),
       collectionMint.toBuffer(),
     ],
-    TMETA_PROG_ID,
+    TMETA_PROGRAM_ID,
   );
   const collectionMeatadataIX = createCreateMetadataAccountV3Instruction(
     {
@@ -114,11 +114,11 @@ export const initCollection = async ({
     PublicKey.findProgramAddressSync(
       [
         Buffer.from('metadata', 'utf8'),
-        TMETA_PROG_ID.toBuffer(),
+        TMETA_PROGRAM_ID.toBuffer(),
         collectionMint.toBuffer(),
         Buffer.from('edition', 'utf8'),
       ],
-      TMETA_PROG_ID,
+      TMETA_PROGRAM_ID,
     );
   const collectionMasterEditionIX = createCreateMasterEditionV3Instruction(
     {
@@ -309,7 +309,7 @@ export const mintCNft = async ({
             collectionMetadata: findMetadataPda(metadata.collection.key)[0],
             collectionMint: metadata.collection.key,
             editionAccount: findMasterEditionPda(metadata.collection.key)[0],
-            tokenMetadataProgram: TMETA_PROG_ID,
+            tokenMetadataProgram: TMETA_PROGRAM_ID,
           },
           {
             metadataArgs: {
