@@ -1486,6 +1486,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tensor-hq/tensor-common@npm:^8.3.3":
+  version: 8.3.3
+  resolution: "@tensor-hq/tensor-common@npm:8.3.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40tensor-hq%2Ftensor-common%2F8.3.3%2Ff45d5de9ba08adcc398fbd3da3af3725d83a766e"
+  dependencies:
+    "@coral-xyz/anchor": ^0.26.0
+    "@metaplex-foundation/mpl-auction-house": ^2.1.1
+    "@metaplex-foundation/mpl-bubblegum": ^0.7.0
+    "@solana/spl-account-compression": ^0.1.4
+    "@solana/spl-token": ^0.3.7
+    "@solana/web3.js": ^1.91.1
+    axios: ^0.29.0
+    big.js: ^6.2.1
+    bn.js: ^5.2.1
+    borsh: ^0.7.0
+    bs58: ^5.0.0
+    exponential-backoff: ^3.1.1
+    js-sha3: ^0.8.0
+    semaphore: ^1.1.0
+  checksum: fd9c53d3ecfce01301122435a1290ea417dad8d5cd86aca3436bffaecad5efd2dc9248914533bf70fea6df246571621c3a987c856f6bc48dc7e702d90024938d
+  languageName: node
+  linkType: hard
+
 "@tensor-hq/tensor-tests-common@workspace:.":
   version: 0.0.0-use.local
   resolution: "@tensor-hq/tensor-tests-common@workspace:."
@@ -1500,7 +1522,7 @@ __metadata:
     "@saberhq/solana-contrib": ^1.14.11
     "@solana/spl-account-compression": ^0.2.0
     "@solana/spl-token": ^0.3.9
-    "@tensor-hq/tensor-common": ^8.0.8
+    "@tensor-hq/tensor-common": ^8.3.3
     "@tensor-oss/tensorswap-sdk": ^4.4.2
     "@types/chai": ^4.3.5
     "@types/mocha": ^10.0.1
@@ -1514,7 +1536,7 @@ __metadata:
     prettier: ^2.7.1
     ts-mocha: ^10.0.0
     ts-node: ^10.9.1
-    typescript: ^4.9
+    typescript: ^5.4.5
   languageName: unknown
   linkType: soft
 
@@ -1947,6 +1969,17 @@ __metadata:
     form-data: ^4.0.0
     proxy-from-env: ^1.1.0
   checksum: 5115a38d79064d07437c5a28f15841e3607634040e3120ec06a2c4367a7d07cf213b16496eab53b6f58ebc5fb377a440ba9ed4782529b14449a1e285734bfb54
+  languageName: node
+  linkType: hard
+
+"axios@npm:^0.29.0":
+  version: 0.29.0
+  resolution: "axios@npm:0.29.0"
+  dependencies:
+    follow-redirects: ^1.15.4
+    form-data: ^4.0.0
+    proxy-from-env: ^1.1.0
+  checksum: b365fa0471ff62472521932c68f152e98650804c016fc6a9fe337a6cd67201141baf14d29161527cce5189b9eba8f14cb5781e02c56e69f56784e9a23385d7e7
   languageName: node
   linkType: hard
 
@@ -2851,6 +2884,16 @@ __metadata:
     debug:
       optional: true
   checksum: 584da22ec5420c837bd096559ebfb8fe69d82512d5585004e36a3b4a6ef6d5905780e0c74508c7b72f907d1fa2b7bd339e613859e9c304d0dc96af2027fd0231
+  languageName: node
+  linkType: hard
+
+"follow-redirects@npm:^1.15.4":
+  version: 1.15.9
+  resolution: "follow-redirects@npm:1.15.9"
+  peerDependenciesMeta:
+    debug:
+      optional: true
+  checksum: 859e2bacc7a54506f2bf9aacb10d165df78c8c1b0ceb8023f966621b233717dab56e8d08baadc3ad3b9db58af290413d585c999694b7c146aaf2616340c3d2a6
   languageName: node
   linkType: hard
 
@@ -4778,23 +4821,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.9":
-  version: 4.9.5
-  resolution: "typescript@npm:4.9.5"
+"typescript@npm:^5.4.5":
+  version: 5.6.2
+  resolution: "typescript@npm:5.6.2"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: ee000bc26848147ad423b581bd250075662a354d84f0e06eb76d3b892328d8d4440b7487b5a83e851b12b255f55d71835b008a66cbf8f255a11e4400159237db
+  checksum: 48777e1dabd9044519f56cd012b0296e3b72bafe12b7e8e34222751d45c67e0eba5387ecdaa6c14a53871a29361127798df6dc8d1d35643a0a47cb0b1c65a33a
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.9#~builtin<compat/typescript>":
-  version: 4.9.5
-  resolution: "typescript@patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=ad5954"
+"typescript@patch:typescript@^5.4.5#~builtin<compat/typescript>":
+  version: 5.6.2
+  resolution: "typescript@patch:typescript@npm%3A5.6.2#~builtin<compat/typescript>::version=5.6.2&hash=ad5954"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 8f6260acc86b56bfdda6004bc53f32ea548f543e8baef7071c8e34d29d292f3e375c8416556c8de10b24deef6933cd1c16a8233dc84a3dd43a13a13265d0faab
+  checksum: c084ee1ab865f108c787e6233a5f63c126c482c0c8e87ec998ac5288a2ad54b603e1ea8b8b272355823b833eb31b9fabb99e8c6152283e1cb47e3a76bd6faf6c
   languageName: node
   linkType: hard
 
