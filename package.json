@@ -1,6 +1,6 @@
 {
   "name": "@tensor-hq/tensor-tests-common",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Common TEST utility methods used by Tensor.",
   "sideEffects": false,
   "module": "./dist/esm/index.js",
@@ -29,7 +29,7 @@
     "@saberhq/solana-contrib": "^1.14.11",
     "@solana/spl-account-compression": "^0.2.0",
     "@solana/spl-token": "^0.3.9",
-    "@tensor-hq/tensor-common": "^8.0.8",
+    "@tensor-hq/tensor-common": "^8.3.3",
     "@tensor-oss/tensorswap-sdk": "^4.4.2",
     "bs58": "^5.0.0",
     "chai-as-promised": "^7.1.1",
